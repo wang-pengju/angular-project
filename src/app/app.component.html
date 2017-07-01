@@ -1,20 +1,60 @@
 <!--The whole content below can be removed with the new code.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAyNTAgMjUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNTAgMjUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojREQwMDMxO30NCgkuc3Qxe2ZpbGw6I0MzMDAyRjt9DQoJLnN0MntmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTI1LDMwIDEyNSwzMCAxMjUsMzAgMzEuOSw2My4yIDQ2LjEsMTg2LjMgMTI1LDIzMCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAJIi8+DQoJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIxMjUsMzAgMTI1LDUyLjIgMTI1LDUyLjEgMTI1LDE1My40IDEyNSwxNTMuNCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAxMjUsMzAgCSIvPg0KCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xMjUsNTIuMUw2Ni44LDE4Mi42aDBoMjEuN2gwbDExLjctMjkuMmg0OS40bDExLjcsMjkuMmgwaDIxLjdoMEwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMQ0KCQlMMTI1LDUyLjF6IE0xNDIsMTM1LjRIMTA4bDE3LTQwLjlMMTQyLDEzNS40eiIvPg0KPC9nPg0KPC9zdmc+DQo=" />
+<div class="wrapper">
+  <h1 class="title">{{title}}</h1>
+  <div class="btn-group">
+    <button type="button" class="btn btn-success btn-lg" (click)="addRow()">添加</button>
+    <button type="button" class="btn btn-danger btn-lg" (click)="removeRow()">批量删除</button>
+  </div>
+  <table class="table table-bordered">
+    <thead>
+      <tr *ngFor="let menu of menus">
+        <th></th>
+        <th>#</th>
+        <th>{{menu.name}}</th>
+        <th>{{menu.sex}}</th>
+        <th>{{menu.age}}</th>
+        <th>{{menu.birthday}}</th>
+        <th>{{menu.tel}}</th>
+        <th>{{menu.operation}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let baseData of dataAll; let i = index;">
+        <td>
+          {{i+1}}
+        </td>
+        <td>
+          <input type="checkbox" (change)="change(i)">
+        </td>
+        <td>
+          <input type="text" [disabled]="editIndex!==i" [(ngModel)]="baseData.name" [ngClass]="{'active':editIndex==i}">
+        </td>
+        <td>
+          <input type="text" [disabled]="editIndex!==i" [(ngModel)]="baseData.sex">
+        </td>
+        <td>
+          <input type="number" [(ngModel)]="baseData.age" [disabled]="editIndex!==i">
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="baseData.birthday" [disabled]="editIndex!==i">
+        </td>
+        <td>
+          <input type="tel" [(ngModel)]="baseData.tel" [disabled]="editIndex!==i">
+        </td>
+        <td>
+          <tr *ngIf="editIndex!==i">
+            <a class="btn btn-warning btn-xs" href="javascript:;" (click)="edit(baseData,i)">
+                编辑
+              </a>
+            <a class="btn btn-danger btn-xs" href="javascript:;" (click)="delate(baseData,i)">删除</a>
+          </tr>
+          <tr *ngIf="editIndex===i">
+            <a class="btn btn-warning btn-xs" href="javascript:;" (click)="save(baseData)">保存</a>
+            <a class="btn btn-danger btn-xs" href="javascript:;" (click)="cancel(baseData)">取消</a>
+          </tr>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- content end -->
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="http://angularjs.blogspot.ca/">Angular blog</a></h2>
-  </li>
-</ul>
-
